@@ -17,29 +17,41 @@ Our main work focuses on implementing a fast BMM in C++ using various optimizati
 *Performance comparison of einsum implementations. The benchmark shows significant performance gains of the BMM approach over NumPy's einsum, especially for large input shapes. Benchmark instances are represented by their shapes when interpreted as matrices.*
 
 ## Folder structure
-- `bmm` contains the `C++` library for batch matrix multiplication.
-- `tests` contains the tests for the bmm library.
+- `bmm` contains the `C++` library for batch matrix multiplication (`bmm/src`), with its tests in `bmm/tests` (C++/Catch2).
+- `fast_einsum` contains the python library that uses the `C++` library for batch matrix multiplication (`fast_einsum/src`), with its tests in `fast_einsum/tests` (Python/pytest).
 - `einsum_benchmark` contains the benchmark and tests for the fast einsum library.
-- `fast_einsum` contains the python library that uses the `C++` library for batch matrix multiplication.
 - `results` contains the results of the benchmarks.
 - `plot` contains the scripts to plot the results.
 
 ## Installation
-The folder `fast_einsum` contains the python einsum library that uses the `C++` library for batch matrix multiplication 
-and can be distributed as a python package: `fast_einsum/dist/fast_einsum-0.1.0-py3-none-any.whl`.
+`fast_einsum` ships as source: its C++ extension (built from the `bmm` library) is compiled automatically when the
+package is installed, so there is no prebuilt wheel to download.
 
-Simply install the package via pip:
+### Requirements
+- Python >= 3.10
+- A C++ compiler with OpenMP support, and CMake >= 3.15
+- A BLAS implementation with development headers (e.g. `libopenblas-dev` on Debian/Ubuntu)
+- An x86_64 CPU with AVX2 support — the BMM kernels use AVX2 intrinsics and are compiled with `-march=native`
+
+### With uv (recommended)
 ```bash
-pip install fast_einsum-0.1.0-py3-none-any.whl
+uv sync --extra test
+```
+This resolves dependencies, compiles the C++ extension via CMake, and installs everything into a local `.venv`.
+Drop `--extra test` if you don't need the test dependencies.
+
+### With pip
+```bash
+pip install ".[test]"
 ```
 
-If you want to perform the tests, you can install the package with the test dependencies:
+## Running tests
 ```bash
-pip install fast_einsum/dist/fast_einsum-0.1.0-py3-none-any.whl[test]
+uv run pytest fast_einsum/tests -v
 ```
-and run the tests from the `fast_einsum` directory:
+or, without uv, in your activated environment:
 ```bash
-pytest tests -v
+pytest fast_einsum/tests -v
 ```
 
 ## Support

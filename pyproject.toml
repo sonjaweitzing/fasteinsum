@@ -1,0 +1,31 @@
+[build-system]
+requires = ["scikit-build-core>=0.10", "pybind11>=2.12"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "fast_einsum"
+version = "0.1.0"
+description = "Fast einsum with batch matrix multiplication"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GNU General Public License v3.0" }
+authors = [
+    { name = "Sonja Weitzing", email = "sonja.weitzing@uni-jena.de" },
+    { name = "Erik Henicke", email = "erik.henicke@uni-jena.de" },
+]
+dependencies = ["numpy"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: POSIX :: Linux",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.scikit-build]
+wheel.packages = ["fast_einsum/src/fast_einsum"]
+cmake.source-dir = "bmm"
+
+[tool.uv]
+package = true
