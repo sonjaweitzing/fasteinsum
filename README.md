@@ -4,7 +4,7 @@ This repository contains an einsum python library that uses batch matrix multipl
 - Erik Henicke
 
 
-in the context of the course Algorithm Engineering by Mark Blacher at Friedrich Schiller University Jena.
+in the context of the course Algorithm Engineering by Mark Blacher at Friedrich Schiller University Jena. We compared the library and described the results in the [project paper](paper.pdf).
 
 ## Motivation
 Einsum is a versatile tool for many multi-linear tensor operations, made popular by NumPy's implementation in 2011. It has great expressive power and is part of major machine learning frameworks such as PyTorch and TensorFlow, leading to its widespread use in deep learning. Since large parts of deep learning are series of matrix multiplications and tensor contractions, they can be easily mapped to einsum expressions.
